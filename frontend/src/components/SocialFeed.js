@@ -80,14 +80,14 @@ function SocialFeed({ token }) {
       <form onSubmit={handlePostSubmit} className="post-form">
         <div className="textarea-wrap">
           <textarea
-            placeholder="Share something with the community\u2026"
+            placeholder="Share something with the community…"
             value={newPost}
             onChange={(e) => {
               setNewPost(e.target.value);
               if (postError) setPostError('');
             }}
             rows="3"
-            maxLength={MAX_CONTENT + 1}
+            maxLength={MAX_CONTENT}
             className={postError ? 'input-error' : ''}
             aria-label="New post content"
           />
@@ -100,7 +100,7 @@ function SocialFeed({ token }) {
           {submitting ? (
             <>
               <span className="btn-spinner" aria-hidden="true" />
-              Posting\u2026
+              Posting…
             </>
           ) : (
             'Post'
@@ -112,7 +112,7 @@ function SocialFeed({ token }) {
         {loading ? (
           <div className="loading-wrap" aria-label="Loading feed">
             <span className="spinner" />
-            <span>Loading feed\u2026</span>
+            <span>Loading feed…</span>
           </div>
         ) : error ? (
           <p className="inline-error" role="alert">{error}</p>

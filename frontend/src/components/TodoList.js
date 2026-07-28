@@ -115,7 +115,7 @@ function TodoList({ token }) {
               setNewTodo(e.target.value);
               if (addError) setAddError('');
             }}
-            maxLength={MAX_TITLE + 1}
+            maxLength={MAX_TITLE}
             className={addError ? 'input-error' : ''}
             aria-label="New task title"
           />
@@ -147,8 +147,8 @@ function TodoList({ token }) {
             <div key={todo.id} className={`todo-item${todo.completed ? ' done' : ''}`}>
               <input
                 type="checkbox"
-                checked={!!todo.completed}
-                onChange={() => handleToggleTodo(todo.id, !!todo.completed)}
+                checked={Boolean(todo.completed)}
+                onChange={() => handleToggleTodo(todo.id, Boolean(todo.completed))}
                 id={`todo-${todo.id}`}
               />
               <label htmlFor={`todo-${todo.id}`} className={todo.completed ? 'completed' : ''}>
