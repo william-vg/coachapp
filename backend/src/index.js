@@ -50,7 +50,13 @@ db.serialize(() => {
 });
 
 // Helpers
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+function isValidEmail(email) {
+  const at = email.indexOf('@');
+  if (at < 1 || at !== email.lastIndexOf('@')) return false;
+  const domain = email.slice(at + 1);
+  const dot = domain.lastIndexOf('.');
+  return dot > 0 && dot < domain.length - 1;
+}
 
 // Auth Routes
 app.post('/api/auth/register', (req, res) => {
@@ -59,7 +65,7 @@ app.post('/api/auth/register', (req, res) => {
   if (!email || !password) {
     return res.status(400).json({ error: 'Email and password required' });
   }
-  if (!EMAIL_RE.test(email)) {
+  if (!isValidEmail(email)) {
     return res.status(400).json({ error: 'Please enter a valid email address' });
   }
   if (password.length < 8) {
@@ -87,7 +93,7 @@ app.post('/api/auth/login', (req, res) => {
   if (!email || !password) {
     return res.status(400).json({ error: 'Email and password required' });
   }
-  if (!EMAIL_RE.test(email)) {
+  if (!isValidEmail(email)) {
     return res.status(400).json({ error: 'Please enter a valid email address' });
   }
 

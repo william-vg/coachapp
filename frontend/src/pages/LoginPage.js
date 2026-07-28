@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import './LoginPage.css';
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+function isValidEmail(email) {
+  const at = email.indexOf('@');
+  if (at < 1 || at !== email.lastIndexOf('@')) return false;
+  const domain = email.slice(at + 1);
+  const dot = domain.lastIndexOf('.');
+  return dot > 0 && dot < domain.length - 1;
+}
 
 function LoginPage({ onLogin }) {
   const [email, setEmail] = useState('');
@@ -15,7 +21,7 @@ function LoginPage({ onLogin }) {
     const errs = {};
     if (!email) {
       errs.email = 'Email is required';
-    } else if (!EMAIL_RE.test(email)) {
+    } else if (!isValidEmail(email)) {
       errs.email = 'Enter a valid email address';
     }
     if (!password) {
