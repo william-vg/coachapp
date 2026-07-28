@@ -40,8 +40,10 @@ router.get('/', (req, res) => {
 // Create post
 router.post(
   '/',
-  [body('content').trim().notEmpty().withMessage('Post content is required')
-    .isLength({ max: 500 }).withMessage('Post must be 500 characters or less')],
+  [
+    body('content').trim().notEmpty().withMessage('Post content is required')
+      .isLength({ max: 500 }).withMessage('Post must be 500 characters or less'),
+  ],
   (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
@@ -95,8 +97,10 @@ router.post('/:id/like', (req, res) => {
 // Add comment
 router.post(
   '/:id/comments',
-  [body('content').trim().notEmpty().withMessage('Comment cannot be empty')
-    .isLength({ max: 300 }).withMessage('Comment must be 300 characters or less')],
+  [
+    body('content').trim().notEmpty().withMessage('Comment cannot be empty')
+      .isLength({ max: 300 }).withMessage('Comment must be 300 characters or less'),
+  ],
   (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });

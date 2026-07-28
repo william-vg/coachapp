@@ -1,8 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('renders the CoachApp brand name', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  // The auth page (Login) is shown when not authenticated — it contains the brand heading
+  const brandElements = screen.getAllByText(/CoachApp/i);
+  expect(brandElements.length).toBeGreaterThan(0);
 });
