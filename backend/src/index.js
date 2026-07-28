@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const { authLimiter, apiLimiter } = require('./rateLimiter');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -7,10 +8,10 @@ const PORT = process.env.PORT || 5000;
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(express.json());
 
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/todos', require('./routes/todos'));
-app.use('/api/feed', require('./routes/feed'));
-app.use('/api/profile', require('./routes/profile'));
+app.use('/api/auth', authLimiter, require('./routes/auth'));
+app.use('/api/todos', apiLimiter, require('./routes/todos'));
+app.use('/api/feed', apiLimiter, require('./routes/feed'));
+app.use('/api/profile', apiLimiter, require('./routes/profile'));
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
