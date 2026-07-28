@@ -2,81 +2,169 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 20px;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
 }
 
 .login-card {
-  background: white;
-  padding: 40px;
-  border-radius: 10px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  background: var(--color-surface);
+  padding: 48px 40px 36px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg);
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
+  animation: fadeIn 0.4s ease both;
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 32px 24px 24px;
+  }
 }
 
 .login-card h1 {
   text-align: center;
-  color: #333;
-  margin: 0 0 10px 0;
+  color: var(--color-primary);
+  margin: 0 0 4px 0;
+  font-size: 28px;
+  letter-spacing: -0.5px;
 }
 
 .login-card h2 {
   text-align: center;
-  color: #666;
-  margin: 0 0 30px 0;
-  font-size: 18px;
+  color: var(--color-text-muted);
+  margin: 0 0 28px 0;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+/* Field group */
+.field-group {
+  margin-bottom: 6px;
 }
 
 .login-card input {
   width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 16px;
+  padding: 12px 14px;
+  margin: 6px 0 2px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius);
+  font-size: 15px;
+  color: var(--color-text);
+  background: var(--color-surface);
+  transition: border-color var(--transition), box-shadow var(--transition);
+  outline: none;
 }
 
-.login-card button {
+.login-card input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.18);
+}
+
+.login-card input.input-error {
+  border-color: var(--color-error);
+  background: var(--color-error-bg);
+}
+
+.login-card input.input-error:focus {
+  box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.15);
+}
+
+.field-error {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: var(--color-error);
+  animation: slideDown 0.15s ease both;
+}
+
+/* Buttons */
+.submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   width: 100%;
-  padding: 12px;
-  margin: 20px 0 0 0;
-  background: #667eea;
+  padding: 13px;
+  margin: 18px 0 0;
+  background: var(--color-primary);
   color: white;
   border: none;
-  border-radius: 5px;
-  font-size: 16px;
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
 }
 
-.login-card button:hover {
-  background: #764ba2;
+.submit-btn:hover:not(:disabled) {
+  background: var(--color-primary-dark);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  transform: translateY(-1px);
 }
 
-.login-card button:disabled {
-  background: #ccc;
+.submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.submit-btn:disabled {
+  background: #a0aec0;
   cursor: not-allowed;
 }
 
+/* Spinner inside button */
+.btn-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.35);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+/* Error banner */
 .error {
-  background: #fee;
-  color: #c33;
-  padding: 10px;
-  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-error-bg);
+  color: var(--color-error);
+  padding: 11px 14px;
+  border-radius: var(--radius);
+  border: 1px solid rgba(229, 62, 62, 0.3);
   margin-bottom: 20px;
+  font-size: 14px;
+  animation: slideDown 0.2s ease both;
+}
+
+.error-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+/* Toggle */
+.toggle-text {
   text-align: center;
+  color: var(--color-text-muted);
+  font-size: 14px;
+  margin: 20px 0 0;
 }
 
 .toggle-btn {
   background: none;
   border: none;
-  color: #667eea;
+  color: var(--color-primary);
   cursor: pointer;
   font-size: 14px;
+  font-weight: 600;
+  padding: 0;
   text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color var(--transition);
 }
 
 .toggle-btn:hover {
-  color: #764ba2;
+  color: var(--color-primary-dark);
 }

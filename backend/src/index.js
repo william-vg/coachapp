@@ -49,12 +49,21 @@ db.serialize(() => {
   `);
 });
 
+// Helpers
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 // Auth Routes
 app.post('/api/auth/register', (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
     return res.status(400).json({ error: 'Email and password required' });
+  }
+  if (!EMAIL_RE.test(email)) {
+    return res.status(400).json({ error: 'Please enter a valid email address' });
+  }
+  if (password.length < 8) {
+    return res.status(400).json({ error: 'Password must be at least 8 characters' });
   }
 
   const passwordHash = bcrypt.hashSync(password, 10);
@@ -77,6 +86,9 @@ app.post('/api/auth/login', (req, res) => {
 
   if (!email || !password) {
     return res.status(400).json({ error: 'Email and password required' });
+  }
+  if (!EMAIL_RE.test(email)) {
+    return res.status(400).json({ error: 'Please enter a valid email address' });
   }
 
   db.get('SELECT * FROM users WHERE email = ?', [email], (err, user) => {
@@ -131,6 +143,14 @@ app.get('/api/todos', authMiddleware, (req, res) => {
 
 app.post('/api/todos', authMiddleware, (req, res) => {
   const { title } = req.body;
+
+  if (!title || !title.trim()) {
+    return res.status(400).json({ error: 'Task title is required' });
+  }
+  if (title.trim().length > 200) {
+    return res.status(400).json({ error: 'Task title must be 200 characters or less' });
+  }
+
   const todoId = uuidv4();
 
   db.run(
@@ -166,6 +186,13 @@ app.get('/api/feed', authMiddleware, (req, res) => {
 
 app.post('/api/feed', authMiddleware, (req, res) => {
   const { content } = req.body;
+
+  if (!content || !content.trim()) {
+    return res.status(400).json({ error: 'Post content is required' });
+  }
+  if (content.trim().length > 500) {
+    return res.status(400).json({ error: 'Post must be 500 characters or less' });
+  }
 
   db.get('SELECT email FROM users WHERE id = ?', [req.userId], (err, user) => {
     if (err || !user) return res.status(500).json({ error: 'User not found' });

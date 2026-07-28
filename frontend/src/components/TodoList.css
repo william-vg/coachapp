@@ -1,76 +1,186 @@
 .todo-card {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background: var(--color-surface);
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  animation: fadeIn 0.35s ease both;
 }
 
 .todo-card h3 {
-  margin: 0 0 20px 0;
-  color: #333;
+  margin: 0 0 18px 0;
+  color: var(--color-text);
+  font-size: 17px;
+  font-weight: 700;
 }
 
+/* Form */
 .todo-form {
   display: flex;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 8px;
+}
+
+.todo-input-wrap {
+  flex: 1;
+  position: relative;
 }
 
 .todo-form input {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius);
   font-size: 14px;
+  color: var(--color-text);
+  transition: border-color var(--transition), box-shadow var(--transition);
+  outline: none;
 }
 
-.todo-form button {
-  padding: 10px 20px;
-  background: #667eea;
+.todo-form input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+.todo-form input.input-error {
+  border-color: var(--color-error);
+}
+
+.char-count {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 11px;
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+
+.char-count.over {
+  color: var(--color-error);
+  font-weight: 700;
+}
+
+.add-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+  padding: 10px 18px;
+  background: var(--color-primary);
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: var(--radius);
   cursor: pointer;
   font-size: 14px;
+  font-weight: 600;
+  transition: background var(--transition), transform var(--transition);
+  flex-shrink: 0;
 }
 
-.todo-form button:hover {
-  background: #764ba2;
+.add-btn:hover:not(:disabled) {
+  background: var(--color-primary-dark);
+  transform: translateY(-1px);
 }
 
+.add-btn:disabled {
+  background: #a0aec0;
+  cursor: not-allowed;
+}
+
+/* Spinner inside button */
+.btn-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,0.35);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+/* List */
 .todo-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
+  margin-top: 4px;
 }
 
 .todo-item {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px;
-  background: #f8f8f8;
-  border-radius: 5px;
-}
-
-.todo-item input[type='checkbox'] {
-  width: 20px;
-  height: 20px;
+  padding: 10px 12px;
+  background: var(--color-bg);
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  transition: background var(--transition), border-color var(--transition), transform var(--transition);
+  animation: slideDown 0.2s ease both;
   cursor: pointer;
 }
 
-.todo-item span {
-  flex: 1;
-  color: #333;
+.todo-item:hover {
+  background: #eef2ff;
+  border-color: rgba(102, 126, 234, 0.2);
+  transform: translateX(2px);
 }
 
-.todo-item span.completed {
+.todo-item.done {
+  opacity: 0.65;
+}
+
+.todo-item input[type='checkbox'] {
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+  accent-color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.todo-item label {
+  flex: 1;
+  color: var(--color-text);
+  font-size: 14px;
+  cursor: pointer;
+  line-height: 1.4;
+}
+
+.todo-item label.completed {
   text-decoration: line-through;
-  color: #999;
+  color: var(--color-text-muted);
+}
+
+/* Loading / error / empty */
+.loading-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 0;
+  color: var(--color-text-muted);
+  font-size: 14px;
+}
+
+.spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+.inline-error {
+  margin: 4px 0 8px;
+  font-size: 12px;
+  color: var(--color-error);
+  animation: slideDown 0.15s ease both;
 }
 
 .empty {
   text-align: center;
-  color: #999;
-  padding: 20px;
+  color: var(--color-text-muted);
+  padding: 24px 0;
+  font-size: 14px;
 }
